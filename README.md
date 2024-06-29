@@ -4,12 +4,16 @@ This is a Nix "channel" with packages you can build.
 
 To list available packages:
 
-    nix-env --description -qaPf ./stable.nix | sort
+    nix-env --description -qaPf . | sort
 
 To build one, e.g. `tlaps`:
 
-    nix-build ./stable.nix -A tlaps -o result
+    nix-build . -A tlaps -o result
     ./result/bin/tlapm --config
+
+For a slightly more stable experience, replace `.` with `./stable.nix` in the
+commands above.  `stable.nix` pins exact upstream dependencies for a
+reproducible experience.
 
 ## What's Here?
 
