@@ -1,0 +1,13 @@
+diff --git a/core/Main.cc b/core/Main.cc
+index 9dabf9f..7a662c1 100644
+--- a/core/Main.cc
++++ b/core/Main.cc
+@@ -1045,7 +1045,7 @@ int main(int argc, char** argv)
+     try {
+       setUsageHelp("USAGE: %s [options] <input-file>\n\n");
+ 
+-#if defined(__linux__)
++#if defined(__linux__) && defined(_FPU_EXTENDED) && defined(_FPU_DOUBLE) && defined(_FPU_GETCW)
+         fpu_control_t oldcw, newcw;
+         _FPU_GETCW(oldcw); newcw = (oldcw & ~_FPU_EXTENDED) | _FPU_DOUBLE; _FPU_SETCW(newcw);
+         // printf("WARNING: for repeatability, setting FPU to use double precision\n");
