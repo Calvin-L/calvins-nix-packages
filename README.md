@@ -32,9 +32,6 @@ A few of my own projects:
 
 And a few open source things I use:
 
- - [`tlaplus`](http://lamport.azurewebsites.net/tla/tla.html), which includes
-   the TLA+ command-line tools such as `tlc2` and `pcal`.  Currently my version
-   (1.6.0) is higher than the version in nixpkgs (1.5.6).
  - [`tlaps`](https://tla.msr-inria.inria.fr/tlaps/content/Home.html), the TLA+
    proof system.  This is a newer and far more functional version than the one
    that ships with Nixpkgs.  It includes:
