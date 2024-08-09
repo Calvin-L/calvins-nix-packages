@@ -23,6 +23,7 @@ let
     ptl-to-trp-translator = callPackage ./packages/ptl-to-trp-translator.nix {};
     zenon                 = callPackage ./packages/zenon.nix {};
     tlaps                 = callPackage ./packages/tlaps.nix {};
+    tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};
     coqhammer             = callPackage ./packages/coqhammer.nix {};
