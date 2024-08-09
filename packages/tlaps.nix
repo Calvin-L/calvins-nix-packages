@@ -1,11 +1,20 @@
 { lib, stdenvNoCC, fetchFromGitHub,
   writeShellApplication,
   # core tools
-  ocamlPackages, bash,
+  ocamlPackages,
+  bash,
+  ps,
+  darwin,
   # solvers
-  z3, yices, cvc4, isabelle_2011, isabelle_2011_pure, zenon,
-  ls4, ptl-to-trp-translator, zipperposition, ps,
-  darwin }:
+  z3,
+  yices,
+  cvc4,
+  isabelle_2011,
+  isabelle_2011_pure,
+  zenon,
+  ls4,
+  # ptl-to-trp-translator, # now ships as part of TLAPS
+  zipperposition }:
 
 let
 
@@ -103,7 +112,7 @@ writeShellApplication {
     cvc4
     isabelle_2011
     zenon
-    ptl-to-trp-translator
+    # ptl-to-trp-translator
     ls4
     zipperposition
     ps
