@@ -4,7 +4,7 @@
   ocamlPackages, bash,
   # solvers
   z3, yices, cvc4, isabelle_2011, isabelle_2011_pure, zenon,
-  ls4, ptl-to-trp-translator, zipperposition,
+  ls4, ptl-to-trp-translator, zipperposition, ps,
   darwin }:
 
 let
@@ -97,6 +97,7 @@ writeShellApplication {
     ptl-to-trp-translator
     ls4
     zipperposition
+    ps
   ];
 
   runtimeEnv = {
