@@ -54,6 +54,15 @@ tlapm = ocamlPackages.buildDunePackage {
 
   postPatch = ''
     rm -r deps
+
+    substituteInPlace src/params.ml --replace-fail \
+'let library_path =
+  let d = Sys.executable_name in
+  let d = Filename.dirname (Filename.dirname d) in
+  let d = Filename.concat d "lib" in
+  let d = Filename.concat d "tlaps" in
+  d' \
+    'let library_path = "'"$out/lib/ocaml/${ocamlPackages.ocaml.version}/site-lib/tlapm/stdlib"'"'
   '';
 
   nativeBuildInputs = lib.optionals (stdenvNoCC.isDarwin) [
