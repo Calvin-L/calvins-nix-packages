@@ -1,8 +1,8 @@
 import ./default.nix rec {
 
   nixpkgs = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/0aeab749216e4c073cece5d34bc01b79e717c3e0.tar.gz";
-    sha256 = "0fnw58pxb9l2iskrcr7d03vkbzf19qqb23r7w0ds2a62wclzxc6h";
+    url = "https://github.com/NixOS/nixpkgs/archive/0ee61304eb44477b6ecd78774d86e431c0b10e5b.tar.gz";
+    sha256 = "1svbp56bpw76sgb2pqi13f4z2nlk772vgwz24y8yg79brykadf7y";
   }) {};
 
   nixjars = import (builtins.fetchTarball {
