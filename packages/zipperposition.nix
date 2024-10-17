@@ -35,9 +35,14 @@ ocamlPackages_downgraded = ocamlPackages.overrideScope (final: prev: {
       rev = version;
       hash = "sha256-vCwLjoFm0xzLa4iQ4iVmLkREF90s9aooWC44Aazu3sY=";
     };
+    buildInputs = [
+      final.seq
+    ];
     checkInputs = [
       final.containers
       final.qtest
+      final.qcheck
+      final.gen
     ];
     nativeCheckInputs = [
       final.qtest
