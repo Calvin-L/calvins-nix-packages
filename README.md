@@ -50,7 +50,7 @@ And a few open source things I use:
      solver.
    - [`zipperposition`](https://github.com/sneeuwballen/zipperposition/), a
      first-order logic solver.
- - [`tlatools-complete`], a wrapper for the TLA+ tools that includes the
+ - `tlatools-complete`, a wrapper for the TLA+ tools that includes the
    community modules and TLAPS standard library.
  - [`apalache`](https://github.com/informalsystems/apalache), a symbolic TLA+
    checker.  (TODO: my version is very old. Can I use the Nix flake in the
