@@ -8,8 +8,8 @@ coqPackages.mkCoqDerivation {
 
   fetcher = {owner, repo, ...}: fetchFromGitHub {
     inherit owner repo;
-    rev = "71790c15e6637ea3bcf39197f9a9a01c0c708d24";
-    hash = "sha256-mGHkdoOw+cTa6JXnd9CJF2UMOcf9CG9W+n06FKRMJQk=";
+    rev = "7c5454b3f73f9d6e621f7c6e90e87271bbe6ee31";
+    hash = "sha256-bi/Wu16mT1CeLq2VjqJzQ12tlV0YLEpGJIu3VaLNrrU=";
   };
 
   nativeBuildInputs = [
