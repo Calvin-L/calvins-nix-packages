@@ -113,6 +113,7 @@ writeShellApplication {
     isabelle_2011
     zenon
     # ptl-to-trp-translator
+    tlapm # ptl-to-trp-translator has moved to tlapm/bin
     ls4
     zipperposition
     ps
