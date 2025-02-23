@@ -14,6 +14,7 @@ let
     crash-safe-io         = callPackage ./packages/crash-safe-io.nix {};
 
     # other open-source
+    cvc4-fake             = callPackage ./packages/cvc4-fake.nix {};
     isabelle_2011         = callPackage ./packages/isabelle_2011.nix {};
     isabelle_2011_pure    = callPackage ./packages/isabelle_2011_logic.nix { logic_name = "Pure"; };
     # isabelle_2011_hol     = callPackage ./packages/isabelle_2011_logic.nix { logic_name = "HOL"; extra_inputs = [self.isabelle_2011_pure] }; # broken, tries to build pure again >:(
@@ -22,7 +23,7 @@ let
     ls4                   = callPackage ./packages/ls4.nix {};
     ptl-to-trp-translator = callPackage ./packages/ptl-to-trp-translator.nix {};
     zenon                 = callPackage ./packages/zenon.nix {};
-    tlaps                 = callPackage ./packages/tlaps.nix {};
+    tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; };
     tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};
