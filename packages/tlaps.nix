@@ -5,6 +5,7 @@
   bash,
   ps,
   darwin,
+  sysctl,
   # solvers
   z3,
   yices,
@@ -12,7 +13,6 @@
   isabelle,
   zenon,
   ls4,
-  # ptl-to-trp-translator, # now ships as part of TLAPS
   zipperposition }:
 
 let
@@ -59,6 +59,23 @@ isabelle-theory = stdenvNoCC.mkDerivation {
   '';
 };
 
+isabelle-wrapper = writeShellApplication {
+  name = "isabelle";
+  runtimeInputs = [
+    isabelle
+    sysctl #!? WTF Isabelle...
+  ];
+  # TODO: fix Isabelle's broken temporary file strategy (doesn't work when multiple users are involved...)
+  text = ''
+    if [[ -d /tmp/isabelle- ]] && ! touch /tmp/isabelle-/foo; then
+      echo 'Temporary directory /tmp/isabelle- is not writable (did Nix take ownership??)' >&2
+      exit 1
+    fi
+    export HOME='${isabelle-theory}/home'
+    exec isabelle "$@"
+  '';
+};
+
 tlapm = ocamlPackages.buildDunePackage {
   pname = "tlapm";
   inherit version;
@@ -72,10 +89,6 @@ tlapm = ocamlPackages.buildDunePackage {
       'let isabelle_tla_path =
   List.fold_left Filename.concat isabelle_base_path ["src"; "TLA+"]' \
       'let isabelle_tla_path = "${isabelle-theory}/src"'
-
-    substituteInPlace src/params.ml --replace-fail \
-      '"isabelle process -e' \
-      '"HOME=${isabelle-theory}/home isabelle process -e'
   '';
 
   nativeBuildInputs = lib.optionals (stdenvNoCC.isDarwin) [
@@ -91,6 +104,11 @@ tlapm = ocamlPackages.buildDunePackage {
     ocamlPackages.dune-build-info
     ocamlPackages.dune-site
   ];
+
+  # ????
+  postInstall = ''
+    mv $out/bin/translate $out/bin/ptl_to_trp
+  '';
 
   meta = {
     description = "Mechanically check TLA+ proofs";
@@ -116,17 +134,16 @@ writeShellApplication {
     z3
     yices
     cvc4
-    isabelle
+    isabelle-wrapper
     zenon
-    # ptl-to-trp-translator
-    tlapm # ptl-to-trp-translator has moved to tlapm/bin
+    tlapm
     ls4
     zipperposition
     ps
   ];
 
   text = ''
-    exec ${tlapm}/bin/tlapm "$@"
+    exec tlapm "$@"
   '';
 
   derivationArgs = {

@@ -25,7 +25,6 @@ let
     apalache              = callPackage ./packages/apalache.nix { jdk = nixpkgs.jdk17_headless; scala = nixpkgs.scala_2_12; };
     nbdkit                = callPackage ./packages/nbdkit.nix {};
     ls4                   = callPackage ./packages/ls4.nix {};
-    ptl-to-trp-translator = callPackage ./packages/ptl-to-trp-translator.nix {};
     zenon                 = callPackage ./packages/zenon.nix {};
     tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; isabelle = self.isabelle-hacked; };
     tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };

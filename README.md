@@ -35,17 +35,7 @@ And a few open source things I use:
  - [`tlaps`](https://tla.msr-inria.inria.fr/tlaps/content/Home.html), the TLA+
    proof system.  This is a newer and far more functional version than the one
    that ships with Nixpkgs.  It includes:
-   - [`isabelle_2011`](https://isabelle.in.tum.de/website-Isabelle2011-1/index.html),
-     which is the most recent version of Isabelle that works with `tlaps`.
-     This package is heavily patched:
-     - heaps are discovered using the `$ISABELLE_PATH` environment variable, so
-       they can live somewhere outside `$HOME`
-     - lots of functionality that `tlaps` does not need has been removed
-     - fixes to compile with PolyML 5.9
    - [`ls4`](https://github.com/quickbeam123/ls4), which is used by `tlaps`.
-   - [`ptl-to-trp-translator`](https://cgi.csc.liv.ac.uk/~konev/software/trp++/),
-     which is used by `tlaps`.  (TODO: compare with the one in the TLAPS source
-     tree.)
    - [`zenon`](https://github.com/zenon-prover/zenon), a first-order logic
      solver.
    - [`zipperposition`](https://github.com/sneeuwballen/zipperposition/), a
