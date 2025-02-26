@@ -9,8 +9,7 @@
   z3,
   yices,
   cvc4,
-  isabelle_2011,
-  isabelle_2011_pure,
+  isabelle,
   zenon,
   ls4,
   # ptl-to-trp-translator, # now ships as part of TLAPS
@@ -18,42 +17,46 @@
 
 let
 
-version = "2024.6.11";
+version = "2025.2.17";
 
 src = fetchFromGitHub {
   owner = "tlaplus";
   repo = "tlapm";
-  rev = "117b5cb1fc0734a5667d6c415cf0a9aee978792b";
-  hash = "sha256-eMuJ20M0sBrF3/VUtTGtFqAdHayAW3VQTaXc3ZJPeDc=";
+  rev = "12015392f5ee30d737bf826efccc68603c2e3c53";
+  hash = "sha256-Az+kL71RVpZbbACAd+RMu0XUoChlfLEMBi+v91iPDoU=";
 };
 
-heap_dirname = "Isabelle${isabelle_2011.version}";
-
-isabelle_2011_tlaplus = stdenvNoCC.mkDerivation {
-  pname = "${isabelle_2011.name}-tlaplus";
+isabelle-theory = stdenvNoCC.mkDerivation {
+  pname = "${isabelle.name}-tlaplus";
   inherit version;
   inherit src;
 
   buildInputs = [
-    isabelle_2011
-    isabelle_2011_pure
+    isabelle
   ];
 
   enableParallelBuilding = true;
 
   buildPhase = ''
     export HOME="$(pwd)/tmp_home"
+    mkdir -p "$HOME"
     make -C isabelle heap-only
   '';
 
   installPhase = ''
-    mkdir -p $out
-    cp -R tmp_home/.isabelle/${heap_dirname}/heaps $out/
+    mkdir -p $out/src
+    cp --reflink=auto -rv isabelle/* $out/src/
+
+    mkdir -p $out/home
+    cp -R tmp_home/.isabelle $out/home/
     echo '--- deleting logs'
-    find $out -type d -name log -exec rm -rfv {} +
+    find $out/home -type d -name log -exec rm -rfv {} +
   '';
 
-  setupHook = ./isabelle-theory-setup-hook.sh;
+  doInstallCheck = true;
+  installCheckPhase = ''
+    HOME="$out/home" isabelle process -e '(writeln "OK")' -d "$out/src" -l TLA+
+  '';
 };
 
 tlapm = ocamlPackages.buildDunePackage {
@@ -62,16 +65,17 @@ tlapm = ocamlPackages.buildDunePackage {
   inherit src;
 
   postPatch = ''
+# <-- for indentation
     rm -r deps
 
     substituteInPlace src/params.ml --replace-fail \
-'let library_path =
-  let d = Sys.executable_name in
-  let d = Filename.dirname (Filename.dirname d) in
-  let d = Filename.concat d "lib" in
-  let d = Filename.concat d "tlaps" in
-  d' \
-    'let library_path = "'"$out/lib/ocaml/${ocamlPackages.ocaml.version}/site-lib/tlapm/stdlib"'"'
+      'let isabelle_tla_path =
+  List.fold_left Filename.concat isabelle_base_path ["src"; "TLA+"]' \
+      'let isabelle_tla_path = "${isabelle-theory}/src"'
+
+    substituteInPlace src/params.ml --replace-fail \
+      '"isabelle process -e' \
+      '"HOME=${isabelle-theory}/home isabelle process -e'
   '';
 
   nativeBuildInputs = lib.optionals (stdenvNoCC.isDarwin) [
@@ -79,6 +83,8 @@ tlapm = ocamlPackages.buildDunePackage {
   ];
 
   buildInputs = [
+    ocamlPackages.camlzip
+    ocamlPackages.cmdliner
     ocamlPackages.sexplib
     ocamlPackages.ppx_inline_test
     ocamlPackages.ppx_assert
@@ -110,7 +116,7 @@ writeShellApplication {
     z3
     yices
     cvc4
-    isabelle_2011
+    isabelle
     zenon
     # ptl-to-trp-translator
     tlapm # ptl-to-trp-translator has moved to tlapm/bin
@@ -118,10 +124,6 @@ writeShellApplication {
     zipperposition
     ps
   ];
-
-  runtimeEnv = {
-    ISABELLE_PATH = "${isabelle_2011_pure}/heaps:${isabelle_2011_tlaplus}/heaps";
-  };
 
   text = ''
     exec ${tlapm}/bin/tlapm "$@"
