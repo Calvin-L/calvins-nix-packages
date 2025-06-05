@@ -10,8 +10,8 @@ haskellPackages.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "Calvin-L";
     repo = pname;
-    rev = "031f9679c1bc1fe9390f6601cff65e4c208ec4b5";
-    hash = "sha256-7wrg4GLsU9kagm9OPMV9c265EFv/eAMrWKcGt8dlcZo=";
+    rev = "a9927f0285fdae32d90bf8e23d25f03f18afd9ba";
+    hash = "sha256-CHlNn3nZWBB3SbuM3DdJnqIhxPEQt1n7+5tPEEaUzfI=";
   };
 
   enableSeparateBinOutput = true;
