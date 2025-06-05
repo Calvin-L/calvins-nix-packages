@@ -17,13 +17,13 @@
 
 let
 
-version = "2025.2.17";
+version = "2025.6.3";
 
 src = fetchFromGitHub {
   owner = "tlaplus";
   repo = "tlapm";
-  rev = "12015392f5ee30d737bf826efccc68603c2e3c53";
-  hash = "sha256-Az+kL71RVpZbbACAd+RMu0XUoChlfLEMBi+v91iPDoU=";
+  rev = "e9b8bb51818f0b454384e8d94fe614899a0aaa78";
+  hash = "sha256-Z15dbuncsAC7R9vF3eosm+ibuXWcL5xHfaLAqTTNBZI=";
 };
 
 isabelle-theory = stdenvNoCC.mkDerivation {
@@ -101,6 +101,7 @@ tlapm = ocamlPackages.buildDunePackage {
     ocamlPackages.sexplib
     ocamlPackages.ppx_inline_test
     ocamlPackages.ppx_assert
+    ocamlPackages.ppx_deriving
     ocamlPackages.dune-build-info
     ocamlPackages.dune-site
   ];

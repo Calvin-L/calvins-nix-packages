@@ -35,6 +35,8 @@ And a few open source things I use:
  - [`tlaps`](https://tla.msr-inria.inria.fr/tlaps/content/Home.html), the TLA+
    proof system.  This is a newer and far more functional version than the one
    that ships with Nixpkgs.  It includes:
+   - [`isabelle-2024`](https://isabelle.in.tum.de/), a slightly older version
+     of Isabelle used by `tlaps`
    - [`ls4`](https://github.com/quickbeam123/ls4), which is used by `tlaps`.
    - [`zenon`](https://github.com/zenon-prover/zenon), a first-order logic
      solver.
