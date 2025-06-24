@@ -1,58 +1,34 @@
-{runCommand, makeWrapper, jre, runtimeClasspath, tlatools, tla-community-modules, tlaps}:
+{lib, runCommand, jre, runtimeClasspath,
+ bash, tlatools, tla-community-modules, tlaps}:
 
 runCommand "tlatools-complete"
 
 {
-  nativeBuildInputs = [
-    makeWrapper
-  ];
-  buildInputs = [
-    tlatools.lib
-    tla-community-modules
-  ];
   propagatedBuildInputs = [
     tlaps
   ];
 }
 
 ''
-  export CP='${runtimeClasspath [tlatools tla-community-modules]}:'"$(tlapm --where)"':$TLA_PATH'
+  CP1=${lib.strings.escapeShellArg (runtimeClasspath [tlatools tla-community-modules])}
+  CP2="$(tlapm --where)"
+  CP3='$TLA_PATH'
+
+  function mkExe {
+    local OUT="$1"
+    local CLS="$2"
+    echo '#!${bash}/bin/bash'                               >>"$OUT"
+    echo "export CLASSPATH=''${CP1@Q}:''${CP2@Q}:''${CP3}"  >>"$OUT"
+    echo '${jre}/bin/java -XX:+UseParallelGC' "$CLS" '"$@"' >>"$OUT"
+    chmod +x "$OUT"
+  }
 
   mkdir -p $out/bin
 
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/tlc2" \
-    --add-flags "-XX:+UseParallelGC tlc2.TLC" \
-    --set CLASSPATH "$CP"
-
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/tlc2repl" \
-    --add-flags "-XX:+UseParallelGC tlc2.REPL" \
-    --set CLASSPATH "$CP"
-
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/tla2sany" \
-    --add-flags "-XX:+UseParallelGC tla2sany.SANY" \
-    --set CLASSPATH "$CP"
-
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/tla2xml" \
-    --add-flags "-XX:+UseParallelGC tla2sany.xml.XMLExporter" \
-    --set CLASSPATH "$CP"
-
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/pcal" \
-    --add-flags "-XX:+UseParallelGC pcal.trans" \
-    --set CLASSPATH "$CP"
-
-  makeWrapper \
-    '${jre}/bin/java' \
-    "$out/bin/tla2tex" \
-    --add-flags "-XX:+UseParallelGC tla2tex.TLA" \
-    --set CLASSPATH "$CP"
+  mkExe "$out/bin/tlc2" 'tlc2.TLC'
+  mkExe "$out/bin/tlc2repl" 'tlc2.REPL'
+  mkExe "$out/bin/tla2sany" 'tla2sany.SANY'
+  mkExe "$out/bin/tla2xml" 'tla2sany.xml.XMLExporter'
+  mkExe "$out/bin/pcal" 'pcal.trans'
+  mkExe "$out/bin/tla2tex" 'tla2tex.TLA'
 ''
