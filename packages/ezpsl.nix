@@ -17,6 +17,11 @@ haskellPackages.mkDerivation rec {
   enableSeparateBinOutput = true;
   enableParallelBuilding  = true;
 
+  # Necessary because we're using hpack: by default the builder tries to
+  # patch the cabal file during the prePatch phase, but we don't have a
+  # cabal file until after we run hpack in preConfigure below.
+  dontConvertCabalFileToUnix = true; # grumble grumble double negatives...
+
   buildTools = [haskellPackages.hpack];
 
   libraryToolDepends = with haskellPackages; [
