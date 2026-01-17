@@ -12,6 +12,7 @@ let
     many-smt              = callPackage ./packages/many-smt.nix {};
     caltac                = callPackage ./packages/caltac.nix {};
     crash-safe-io         = callPackage ./packages/crash-safe-io.nix {};
+    sqez                  = nixpkgs.python3Packages.callPackage ./packages/sqez.nix {};
 
     # other open-source
     cvc4-fake             = callPackage ./packages/cvc4-fake.nix {};
