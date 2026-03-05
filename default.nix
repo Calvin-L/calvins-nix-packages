@@ -26,12 +26,12 @@ let
       ];
       buildFlags = [ "compiler" ];
     };
-    isabelle-2024         = callPackage ./packages/isabelle-2024.nix { polyml = self.polyml-for-isabelle; };
+    isabelle-2025         = callPackage ./packages/isabelle-2025.nix { polyml = self.polyml-for-isabelle; };
     apalache              = callPackage ./packages/apalache.nix { jdk = nixpkgs.jdk17_headless; scala = nixpkgs.scala_2_12; };
     nbdkit                = callPackage ./packages/nbdkit.nix {};
     ls4                   = callPackage ./packages/ls4.nix {};
     zenon                 = callPackage ./packages/zenon.nix {};
-    tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; isabelle = self.isabelle-2024; };
+    tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; isabelle = self.isabelle-2025; };
     tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};

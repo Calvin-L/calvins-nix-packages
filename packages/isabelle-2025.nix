@@ -48,7 +48,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: rec {
   pname = "isabelle";
-  version = "2024";
+  version = "2025";
 
   dirname = "Isabelle${version}";
 
@@ -56,17 +56,17 @@ stdenv.mkDerivation (finalAttrs: rec {
     if stdenv.hostPlatform.isDarwin then
       fetchurl {
         url = "https://isabelle.in.tum.de/website-${dirname}/dist/${dirname}_macos.tar.gz";
-        hash = "sha256-IgNfmW9x6h8DBj9vFEGV62oEl01NkW7QdyzXlWmii8c=";
+        hash = "sha256-6ldUwiiFf12dOuJU7JgUeX8kU+opDfILL23LLvDi5/g=";
       }
     else if stdenv.hostPlatform.isx86 then
       fetchurl {
         url = "https://isabelle.in.tum.de/website-${dirname}/dist/${dirname}_linux.tar.gz";
-        hash = "sha256-YDqq+KvqNll687BlHSwWKobAoN1EIHZvR+VyQDljkmc=";
+        hash = lib.fakeHash;
       }
     else
       fetchurl {
         url = "https://isabelle.in.tum.de/website-${dirname}/dist/${dirname}_linux_arm.tar.gz";
-        hash = "sha256-jXWVv18WwrVnqVX1s4Lnyf7DkOzPa3EdLXYxgtKD+YA=";
+        hash = lib.fakeHash;
       };
 
   nativeBuildInputs = [ java ];

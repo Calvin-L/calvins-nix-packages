@@ -17,13 +17,13 @@
 
 let
 
-version = "2025.6.3";
+version = "2025.12.18";
 
 src = fetchFromGitHub {
   owner = "tlaplus";
   repo = "tlapm";
-  rev = "e9b8bb51818f0b454384e8d94fe614899a0aaa78";
-  hash = "sha256-Z15dbuncsAC7R9vF3eosm+ibuXWcL5xHfaLAqTTNBZI=";
+  rev = "471b4815c01b2d6fb1e820cb29b73cb2939cf5aa";
+  hash = "sha256-3VwnZDnEFPMao+OZbYdgKo+Vyfq0X6tNNZQID/mr4ZM=";
 };
 
 isabelle-theory = stdenvNoCC.mkDerivation {
