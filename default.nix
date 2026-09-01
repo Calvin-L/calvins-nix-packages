@@ -1,11 +1,12 @@
 { nixpkgs ? import <nixpkgs> {},
-  nixjars ? import <nixjars> { nixpkgs=nixpkgs; } }:
+  nixjars ? import <nixjars> { nixpkgs=nixpkgs; },
+  packageOverrides ? pkgs: {} }:
 
 let
 
   callPackage = nixpkgs.lib.callPackageWith (nixjars // nixpkgs // self);
 
-  self = {
+  self = ({
     # my projects
     ezpsl                 = callPackage ./packages/ezpsl.nix {};
     retry-forever         = callPackage ./packages/retry-forever.nix {};
@@ -37,6 +38,6 @@ let
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};
     coqhammer             = callPackage ./packages/coqhammer.nix {};
     zipperposition        = callPackage ./packages/zipperposition.nix { ocamlPackages = nixpkgs.ocaml-ng.ocamlPackages_4_10; };
-  };
+  } // packageOverrides self);
 
 in self
