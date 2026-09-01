@@ -1,11 +1,13 @@
 { lib, stdenvNoCC, fetchFromGitHub,
   writeShellApplication,
+  tla-community-modules,
   # core tools
   ocamlPackages,
   bash,
   ps,
   darwin,
   sysctl,
+  unzip,
   # solvers
   z3,
   yices,
@@ -17,13 +19,13 @@
 
 let
 
-version = "2025.12.18";
+version = "2026.7.31";
 
 src = fetchFromGitHub {
   owner = "tlaplus";
   repo = "tlapm";
-  rev = "471b4815c01b2d6fb1e820cb29b73cb2939cf5aa";
-  hash = "sha256-3VwnZDnEFPMao+OZbYdgKo+Vyfq0X6tNNZQID/mr4ZM=";
+  rev = "4600b24c6d95a25ff081ad37b63b2a01c29d43a5";
+  hash = "sha256-qRrKoL9aJ9anF72cNMTIwwcdLfMAlsLKE8I/pvYo4xs=";
 };
 
 isabelle-theory = stdenvNoCC.mkDerivation {
@@ -84,9 +86,17 @@ tlapm = ocamlPackages.buildDunePackage {
       'let isabelle_tla_path =
   List.fold_left Filename.concat isabelle_base_path ["src"; "TLA+"]' \
       'let isabelle_tla_path = "${isabelle-theory}/src"'
+
+    COMMUNITY_MODULES_JAR="$(find ${lib.strings.escapeShellArg tla-community-modules} -iname '*.jar')"
+
+    substituteInPlace library/dune --replace-fail \
+      'run "wget" "https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules.jar"' \
+      'run "cp" "-v" "--reflink=auto" "'"$COMMUNITY_MODULES_JAR"'" "CommunityModules.jar"'
   '';
 
-  nativeBuildInputs = lib.optionals (stdenvNoCC.isDarwin) [
+  nativeBuildInputs = [
+    unzip
+  ] ++ lib.optionals (stdenvNoCC.isDarwin) [
     darwin.sigtool
   ];
 
