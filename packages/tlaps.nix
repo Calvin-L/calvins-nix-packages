@@ -1,10 +1,10 @@
-{ lib, stdenvNoCC, fetchFromGitHub,
+{ lib, stdenvNoCC, fetchFromGitHub, fetchurl,
   writeShellApplication,
   tla-community-modules,
   # core tools
   ocamlPackages,
   bash,
-  ps,
+  procps,
   darwin,
   sysctl,
   unzip,
@@ -78,6 +78,18 @@ tlapm = ocamlPackages.buildDunePackage {
   inherit version;
   inherit src;
 
+  patches = [
+    # perf fixes from https://github.com/tlaplus/tlapm/issues/286
+    # I manually audited all of these on 2026/9/1.
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/5c1ae25a5ea7916926f9f9639f284d5cc2341fd9.patch"; hash = "sha256-JTE3Lp7aFHD0FEnZyj26fcOL5Qpz31crT77xB+/AFuo="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/e360684c9bdb09d741b8d3749cacbdb47eddaca1.patch"; hash = "sha256-ka+b3Jczs8Sjvu+OtCUd2k/UW41+E+DQxKji5nyDrQo="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/4cc3aeab5972b14ceb4dbd7f0d4dfd7678038518.patch"; hash = "sha256-JDXyhiKwuDWKzAN5SE/PCrZJod80rU8qfBKO9D5iQJE="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/6bb4a0bfde7decc443f3e7190b81022e8d0a6de7.patch"; hash = "sha256-X3ogzaaBSlLRODaTVnB7qYY17EF/WOxgQ0IHYmXIvPQ="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/9f9c5cf0ed711b0d7863594024a25b69a5374772.patch"; hash = "sha256-zhmnuI4qau3+3XokErlyCiSS+1S+zn+DNXULKAERuos="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/01d37869fd0c1be673d8acb5976768aa3677f0c6.patch"; hash = "sha256-ENrErgiAfz4cDSlHmFiMVkJS2jD7lbU6mHSi3CjyOw8="; })
+    (fetchurl { url = "https://github.com/qdelamea-aneo/tlapm/commit/edd012962e27e1a68a0f5714d263436f6d1dd3cf.patch"; hash = "sha256-p1UZzl1B9HxZLYSl2I/++I0WGM+RwRiV5pD7aLjXc/Y="; })
+  ];
+
   postPatch = ''
 # <-- for indentation
     rm -r deps
@@ -145,7 +157,7 @@ writeShellApplication {
     tlapm
     ls4
     zipperposition
-    ps
+    procps
   ];
 
   text = ''
