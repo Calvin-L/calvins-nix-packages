@@ -65,12 +65,7 @@ isabelle-wrapper = writeShellApplication {
     isabelle
     sysctl #!? WTF Isabelle...
   ];
-  # TODO: fix Isabelle's broken temporary file strategy (doesn't work when multiple users are involved...)
   text = ''
-    if [[ -d /tmp/isabelle- ]] && ! touch /tmp/isabelle-/foo; then
-      echo 'Temporary directory /tmp/isabelle- is not writable (did Nix take ownership??)' >&2
-      exit 1
-    fi
     export HOME='${isabelle-theory}/home'
     exec isabelle "$@"
   '';

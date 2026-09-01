@@ -131,7 +131,7 @@ stdenv.mkDerivation (finalAttrs: rec {
       ln -s ${naproche}/bin/Naproche-SAD contrib/naproche-*/x86*/
     ''
     + ''
-
+      substituteInPlace etc/settings --replace-fail 'ISABELLE_TMP_PREFIX="/tmp/isabelle-''${USER:-$LOGNAME}"' 'ISABELLE_TMP_PREFIX="''${TMPDIR:-/tmp}/isabelle-''${USER:-$LOGNAME}"'
       echo ISABELLE_LINE_EDITOR=${rlwrap}/bin/rlwrap >>etc/settings
 
       for comp in contrib/jdk* contrib/polyml-* contrib/verit-* contrib/vampire-* contrib/e-*; do
