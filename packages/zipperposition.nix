@@ -62,6 +62,18 @@ ocamlPackages_downgraded = ocamlPackages.overrideScope (final: prev: {
     };
   });
 
+  menhir = prev.menhir.overrideAttrs (prev: rec {
+    # Something called "menhirGLR" appeared in newer versions, and we have to
+    # scrub that from the dependencies.
+    buildInputs = [
+      final.menhirLib
+      final.menhirSdk
+    ];
+
+    # Gotta scrub the patches from this guy (which don't apply on our ancient
+    # version).
+    patches = [];
+  });
 });
 
 version = "2.1";

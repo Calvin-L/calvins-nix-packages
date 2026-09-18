@@ -1,13 +1,13 @@
 import ./default.nix rec {
 
   nixpkgs = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/457378d5f35a52ad2cbae0950cef32b7d521e264.tar.gz";
-    sha256 = "0q9rhbccbnbanzfdcvzw5fpglk2x6n019ky7sc7wlz87n714i72b";
+    url = "https://github.com/NixOS/nixpkgs/archive/0c32f40fe3e2a9adfc427fd5abc061a31043ea44.tar.gz";
+    sha256 = "11gv5qs8r9vljy5ja4figvfpflffip0ylnnqdik04054ni6crh2n";
   }) {};
 
   nixjars = import (builtins.fetchTarball {
-    url = "https://github.com/Calvin-L/nixjars/archive/2a6264b63243b7f1ee9f1031278aa8f1b303b0b5.tar.gz";
-    sha256 = "1nd58s1q5qn8zkw7bkrvchgc28p8arl5mqavs2bx7l27b16a6crn";
+    url = "https://github.com/Calvin-L/nixjars/archive/8f7cee1897bfc48ef323620ce341750a0b873c69.tar.gz";
+    sha256 = "0q0n9gagjkd6i9v3r4wm9yyig5xljylxgzac4rjskrmy7jv3wfc2";
   }) {nixpkgs=nixpkgs;};
 
 }
