@@ -32,6 +32,8 @@ let
     nbdkit                = callPackage ./packages/nbdkit.nix {};
     ls4                   = callPackage ./packages/ls4.nix {};
     zenon                 = callPackage ./packages/zenon.nix {};
+    tlapm-unwrapped       = callPackage ./packages/tlapm-unwrapped.nix {};
+    tlapm-isabelle-theory = callPackage ./packages/tlapm-isabelle-theory.nix { isabelle = self.isabelle-2025; };
     tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; isabelle = self.isabelle-2025; };
     tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
