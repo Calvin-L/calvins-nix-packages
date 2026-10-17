@@ -51,3 +51,5 @@ And a few open source things I use:
    Linux.
  - [`crosstool-ng`](https://crosstool-ng.github.io/), which I use for
    cross-compiling to Raspberry Pi.
+ - [`verus`](https://github.com/verus-lang/verus) (NOTE: requires
+   [`rust-overlay`](https://github.com/oxalica/rust-overlay))

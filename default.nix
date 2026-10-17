@@ -39,6 +39,14 @@ let
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};
     coqhammer             = callPackage ./packages/coqhammer.nix {};
+    verus                 = callPackage ./packages/verus.nix {
+      # Verus uses rustc's private API, so both the pinned version and rustc-dev are required.
+      rust-toolchain = nixpkgs.rust-bin.stable."1.98.1".default.override {
+        extensions = [
+          "rustc-dev"
+        ];
+      };
+    };
     zipperposition        = callPackage ./packages/zipperposition.nix { ocamlPackages = nixpkgs.ocaml-ng.ocamlPackages_4_10; };
   } // packageOverrides self);
 
