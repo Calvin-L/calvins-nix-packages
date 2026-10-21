@@ -113,7 +113,7 @@ verusRustPlatform.buildRustPackage (finalAttrs: {
         --set VERUS_USE_RUSTUP 0 \
         --set-default VERUS_Z3_PATH ${lib.getExe z3} \
         --prefix PATH : ${lib.makeBinPath [ toolchain ]} \
-        --prefix ${if stdenv.hostPlatform.isDarwin then "DYLD_LIBRARY_PATH" else "LD_LIBRARY_PATH"} : ${toolchain}/lib
+        --suffix ${if stdenv.hostPlatform.isDarwin then "DYLD_FALLBACK_LIBRARY_PATH" else "LD_LIBRARY_PATH"} : ${toolchain}/lib
     done
     runHook postInstall
   '';
