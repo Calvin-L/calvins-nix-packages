@@ -1,7 +1,7 @@
 {lib, runCommand, jre, runtimeClasspath,
- bash, tlatools, tla-community-modules, tlaps}:
+ bash, tla-tools, tla-community-modules, tlaps}:
 
-runCommand "tlatools-complete"
+runCommand "tla-tools-complete"
 
 {
   propagatedBuildInputs = [
@@ -10,7 +10,7 @@ runCommand "tlatools-complete"
 }
 
 ''
-  CP1=${lib.strings.escapeShellArg (runtimeClasspath [tlatools tla-community-modules])}
+  CP1=${lib.strings.escapeShellArg (runtimeClasspath [tla-tools tla-community-modules])}
   CP2="$(tlapm --where)"
   CP3='$TLA_PATH'
 

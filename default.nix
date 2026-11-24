@@ -35,7 +35,7 @@ let
     tlapm-unwrapped       = callPackage ./packages/tlapm-unwrapped.nix {};
     tlapm-isabelle-theory = callPackage ./packages/tlapm-isabelle-theory.nix { isabelle = self.isabelle-2025; };
     tlaps                 = callPackage ./packages/tlaps.nix { cvc4 = self.cvc4-fake; isabelle = self.isabelle-2025; };
-    tlatools-complete     = callPackage ./packages/tlatools-complete.nix { jre = nixjars.jre; };
+    tla-tools-complete    = callPackage ./packages/tla-tools-complete.nix { jre = nixjars.jre; };
     crosstool-ng          = callPackage ./packages/crosstool-ng.nix {};
     coqhammer-tactics     = callPackage ./packages/coqhammer-tactics.nix {};
     coqhammer             = callPackage ./packages/coqhammer.nix {};

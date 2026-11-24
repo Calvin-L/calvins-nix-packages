@@ -1,4 +1,4 @@
-{lib, haskellPackages, tlatools, fetchFromGitHub}:
+{lib, haskellPackages, tla-tools, fetchFromGitHub}:
 
 haskellPackages.mkDerivation rec {
   pname = "ezpsl";
@@ -50,7 +50,7 @@ haskellPackages.mkDerivation rec {
   ];
 
   testToolDepends = [
-    tlatools
+    tla-tools
   ];
 
   preConfigure = "hpack";
